@@ -3,11 +3,27 @@ import io
 path = 'C:\ProgStaff\DemonSlave\day_log.txt'
 
 
+def split_dl_line(dl_line):
+    dl_line = dl_line.replace('\n', '')
+    while dl_line.find('  ') != -1:
+        dl_line = dl_line.replace('  ', ' ')
+    while dl_line.find('\t\t') != -1:
+        dl_line = dl_line.replace('\t\t', '\t')
+    dl_line = dl_line.split('\t')
+    dl_line = dl_line[1:] if dl_line[0] == "" else dl_line
+    dl_line.insert(0, dl_line[0].split(')')[0])
+    dl_line[1] = dl_line[1][dl_line[1].find(')')+2:]
+    dl_line.insert(2, dl_line[2].split(' ') if dl_line[2].find(' ') != -1 else [dl_line[2]])
+    dl_line = dl_line[:-1]
+    return dl_line
+
+
 def action_alert1(f_line):
     return str('action_alert1' + f_line)
 
 
 def action_alert2(f_line):
+    print(split_dl_line(f_line))
     return str('action_alert2' + f_line)
 
 
@@ -16,6 +32,7 @@ def action_deadline(f_line):
 
 
 def action_evaluate_proc(f_line):
+    print(split_dl_line(f_line))
     return str('action_evaluate_proc' + f_line)
 
 
